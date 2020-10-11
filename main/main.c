@@ -13,6 +13,7 @@
 #include "scan.h"
 #include "wifi.h"
 #include "http.h"
+#include "EmonLib.h"
 
 static const char *TAG = "Template App";
 
