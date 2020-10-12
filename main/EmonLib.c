@@ -19,7 +19,7 @@ void emon_voltage(energy_mon* emon, adc1_channel_t _inPinV, double _VCAL, double
   adc1_config_channel_atten(emon->inPinV,ADC_ATTEN_DB_0);
 }
 
-void emon_current(energy_mon* emon, adc1_channel_t _inPinI, double _ICAL)
+extern void emon_current(energy_mon* emon, adc1_channel_t _inPinI, double _ICAL)
 {
   emon->inPinI = _inPinI;
   emon->ICAL = _ICAL;

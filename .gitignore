@@ -3,3 +3,4 @@ build/
 sdkconfig
 sdkconfig.old
 Kconfig.projbuild
+aws_clientcredential_keys.h

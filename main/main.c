@@ -14,6 +14,7 @@
 #include "wifi.h"
 #include "http.h"
 #include "EmonLib.h"
+#include "aws_clientcredential_keys.h"
 
 static const char *TAG = "Template App";
 
@@ -52,15 +53,21 @@ void app_main(void)
     printf("Doing Wifi init...");
     wifi_init_sta();
     printf("WiFi Init Done!");
-    do_http_get();
-    ESP_LOGI(TAG, "HTTP_GET");
+    //do_http_get();
+    //ESP_LOGI(TAG, "HTTP_GET");
     
-    printf("HTTP DONE");
+    //printf("HTTP DONE");
+
+    energy_mon emon;
+    emon_current(&emon, ADC1_CHANNEL_1, 111.1);
+    double Irms;
+
 
     // Loop delay then reboot
-    for (int i = 10; i >= 0; i--) {
-        printf("Restarting in %d seconds...\n", i);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+    for (int i = 200; i >= 0; i--) {
+        Irms = emon_calcIrms(&emon, 1480);
+        printf("Iteration: %d\tIrms: %f \n", i, Irms);
+        vTaskDelay(200 / portTICK_PERIOD_MS);
     }
     printf("Restarting now.\n");
     fflush(stdout);
