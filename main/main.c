@@ -59,12 +59,11 @@ void app_main(void)
     //printf("HTTP DONE");
 
     energy_mon emon;
-    emon_current(&emon, ADC1_CHANNEL_1, 111.1);
+    emon_current(&emon, ADC1_CHANNEL_6, 20.0);
     double Irms;
 
-
     // Loop delay then reboot
-    for (int i = 200; i >= 0; i--) {
+    for (int i = 20000; i >= 0; i--) {
         Irms = emon_calcIrms(&emon, 1480);
         printf("Iteration: %d\tIrms: %f \n", i, Irms);
         vTaskDelay(200 / portTICK_PERIOD_MS);
