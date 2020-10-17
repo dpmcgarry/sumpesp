@@ -19,7 +19,10 @@
 #define ADC_COUNTS  (1<<ADC_BITS)
 
 // ESP32 runs at 3.3V
-#define SUPPLY_VOLTAGE 3300
+// But the ADC only has a range from 0->1.1V
+// So our voltage divider's midpoint is 573mV
+// Which makes the ADC range 0->1146
+#define SUPPLY_VOLTAGE 1146
 
 typedef struct energy_mon energy_mon;
 

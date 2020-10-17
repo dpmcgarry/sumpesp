@@ -160,11 +160,13 @@ double emon_calcIrms(energy_mon* emon, unsigned int Number_of_Samples)
   for (unsigned int n = 0; n < Number_of_Samples; n++)
   {
     emon->sampleI = adc1_get_raw(emon->inPinI);
-
+    //printf("Sample: %d\n", emon->sampleI);
     // Digital low pass filter extracts the 2.5 V or 1.65 V dc offset,
     //  then subtract this - signal is now centered on 0 counts.
     emon->offsetI = (emon->offsetI + (emon->sampleI-emon->offsetI)/ADC_COUNTS);
+    
     emon->filteredI = emon->sampleI - emon->offsetI;
+    //printf("Filter: %f\n", emon->filteredI);
 
     // Root-mean-square method current
     // 1) square current values
@@ -174,6 +176,7 @@ double emon_calcIrms(energy_mon* emon, unsigned int Number_of_Samples)
   }
 
   double I_RATIO = emon->ICAL *((SUPPLY_VOLTAGE/1000.0) / (ADC_COUNTS));
+  //printf("Ratio: %f\n", I_RATIO);
   emon->Irms = I_RATIO * sqrt(emon->sumI / Number_of_Samples);
 
   //Reset accumulators

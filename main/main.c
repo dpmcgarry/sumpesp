@@ -59,7 +59,8 @@ void app_main(void)
     //printf("HTTP DONE");
 
     energy_mon emon;
-    emon_current(&emon, ADC1_CHANNEL_6, 20.0);
+    //90.9091
+    emon_current(&emon, ADC1_CHANNEL_6, 80.0);
     double Irms;
 
     // Loop delay then reboot
