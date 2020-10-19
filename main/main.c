@@ -18,6 +18,12 @@
 
 static const char *TAG = "Template App";
 
+// Current Calibration Constant
+// 246.9136 is what the math says this should be
+// 190 is what I figured out for my setup using an ammeter
+// and a portable electric heater
+static const double ICALIBRATION = 190.0;
+
 void app_main(void)
 {
     printf("Hello world!\n");
@@ -59,14 +65,14 @@ void app_main(void)
     //printf("HTTP DONE");
 
     energy_mon emon;
-    //90.9091
-    emon_current(&emon, ADC1_CHANNEL_6, 80.0);
+    
+    emon_current(&emon, ADC1_CHANNEL_6, ICALIBRATION);
     double Irms;
 
     // Loop delay then reboot
-    for (int i = 20000; i >= 0; i--) {
+    while(true) {
         Irms = emon_calcIrms(&emon, 1480);
-        printf("Iteration: %d\tIrms: %f \n", i, Irms);
+        printf("Irms: %f \n", Irms);
         vTaskDelay(200 / portTICK_PERIOD_MS);
     }
     printf("Restarting now.\n");
