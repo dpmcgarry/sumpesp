@@ -4,8 +4,8 @@
 ********************************************
 */
 
-#ifndef SCAN_H_
-#define SCAN_H_
+#ifndef DIZON_SCAN_H
+#define DIZON_SCAN_H
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"

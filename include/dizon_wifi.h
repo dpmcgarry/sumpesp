@@ -4,8 +4,8 @@
 ***********************************************
 */
 
-#ifndef WIFI_H
-#define WIFI_H
+#ifndef DIZON_WIFI_H
+#define DIZON_WIFI_H
 
 #include <string.h>
 #include "freertos/FreeRTOS.h"

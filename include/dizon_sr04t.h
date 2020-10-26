@@ -3,8 +3,8 @@
   Don McGarry
 */
 
-#ifndef SR04T_H
-#define SR04T_H
+#ifndef DIZON_SR04T_H
+#define DIZON_SR04T_H
 #include "driver/gpio.h"
 
 typedef struct 

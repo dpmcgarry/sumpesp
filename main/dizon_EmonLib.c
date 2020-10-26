@@ -4,7 +4,7 @@
   by Trystan Lea, April 27 2010 GNU GPL
 */
 
-#include "EmonLib.h"
+#include "dizon_EmonLib.h"
 
 //--------------------------------------------------------------------------------------
 // Sets the pins to be used for voltage and current sensors

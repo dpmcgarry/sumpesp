@@ -10,11 +10,14 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "nvs_flash.h"
-#include "scan.h"
-#include "wifi.h"
-#include "http.h"
-#include "EmonLib.h"
+#include "dizon_scan.h"
+#include "dizon_wifi.h"
+#include "dizon_http.h"
+#include "dizon_EmonLib.h"
 #include "aws_clientcredential_keys.h"
+
+#include "dizon_sntp.h"
+#include "dizon_mqtt.h"
 
 static const char *TAG = "Template App";
 
@@ -26,6 +29,13 @@ static const double ICALIBRATION = 190.0;
 
 void app_main(void)
 {
+    uint8_t mac[6] = {0};
+    char macstr[13];
+    energy_mon emon;
+    double Irms;
+    char* timestr;
+    esp_mqtt_client_handle_t mqtt_client;
+
     printf("Hello world!\n");
 
     // Initialize NVS
@@ -55,6 +65,9 @@ void app_main(void)
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
 
+    esp_efuse_mac_get_default(mac);    
+    sprintf(macstr, "%X%X%X%X%X%X", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    ESP_LOGI(TAG, "MAC Address: %s", macstr);
     ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
     printf("Doing Wifi init...");
     wifi_init_sta();
@@ -64,18 +77,15 @@ void app_main(void)
     
     //printf("HTTP DONE");
 
-    energy_mon emon;
-    
+    init_sntp();
+    mqtt_client=mqtt_app_start();
     emon_current(&emon, ADC1_CHANNEL_6, ICALIBRATION);
-    double Irms;
 
-    // Loop delay then reboot
     while(true) {
         Irms = emon_calcIrms(&emon, 1480);
         printf("Irms: %f \n", Irms);
-        vTaskDelay(200 / portTICK_PERIOD_MS);
+        timestr = current_iso_utc_time();
+        send_aws_msg(mqtt_client, macstr, timestr, Irms);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
-    printf("Restarting now.\n");
-    fflush(stdout);
-    esp_restart();
 }

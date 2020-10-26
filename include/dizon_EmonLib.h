@@ -4,8 +4,8 @@
   by Trystan Lea, April 27 2010 GNU GPL
 */
 
-#ifndef EmonLib_h
-#define EmonLib_h
+#ifndef DIZON_EMONLIB_H
+#define DIZON_EMONLIB_H
 
 #include <math.h>
 #include <stdio.h>

@@ -3,8 +3,8 @@
 * http.h - Wrapper for basic HTTP GET Operation *
 *************************************************
 */
-#ifndef HTTP_H
-#define HTTP_H
+#ifndef DIZON_HTTP_H
+#define DIZON_HTTP_H
 
 #include <string.h>
 #include "freertos/FreeRTOS.h"

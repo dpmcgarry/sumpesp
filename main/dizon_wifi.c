@@ -4,7 +4,7 @@
 ***********************************************
 */
 
-#include "wifi.h"
+#include "dizon_wifi.h"
 
 static const char *TAG = "WiFi";
 

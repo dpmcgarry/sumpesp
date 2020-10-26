@@ -3,7 +3,7 @@
 * http.c - Does a HTTP GET *
 ****************************
 */
-#include "http.h"
+#include "dizon_http.h"
 
 static const char *TAG = "HTTP";
 

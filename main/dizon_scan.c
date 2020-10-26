@@ -3,7 +3,7 @@
 * Scan.c - Scans for SSIDs and Prints Them *
 ********************************************
 */
-#include "scan.h"
+#include "dizon_scan.h"
 
 #define DEFAULT_SCAN_LIST_SIZE CONFIG_EXAMPLE_SCAN_LIST_SIZE
 
