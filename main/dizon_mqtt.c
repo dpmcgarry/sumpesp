@@ -65,10 +65,11 @@ esp_mqtt_client_handle_t mqtt_app_start(void)
     return client;
 }
 
-void send_aws_msg(esp_mqtt_client_handle_t client, char* id, char* time, double Irms)
+void send_aws_msg(esp_mqtt_client_handle_t client, char* id, char* time, double Irms, uint32_t free_mem)
 {
     char buf[100];
-    sprintf(buf, "{ \"ID\":\"%s\", \"time\":\"%s\",\"Irms\":\"%f\" }", id, time, Irms);
+    sprintf(buf, "{ \"ID\":\"%s\", \"time\":\"%s\",\"Irms\":\"%f\", \"memFree\":\"%d\" }", id, time, Irms, free_mem);
     esp_mqtt_client_publish(client, "esptest/", buf, 0, 0, 0);
     ESP_LOGI(TAG, "Message Sent: %s", time);
+    free(time);
 }

@@ -25,7 +25,7 @@ static const char *TAG = "Template App";
 // 246.9136 is what the math says this should be
 // 190 is what I figured out for my setup using an ammeter
 // and a portable electric heater
-static const double ICALIBRATION = 190.0;
+static const double ICALIBRATION = 30.0;
 
 void app_main(void)
 {
@@ -35,6 +35,7 @@ void app_main(void)
     double Irms;
     char* timestr;
     esp_mqtt_client_handle_t mqtt_client;
+    uint32_t free_mem;
 
     printf("Hello world!\n");
 
@@ -85,7 +86,9 @@ void app_main(void)
         Irms = emon_calcIrms(&emon, 1480);
         printf("Irms: %f \n", Irms);
         timestr = current_iso_utc_time();
-        send_aws_msg(mqtt_client, macstr, timestr, Irms);
+        free_mem = esp_get_free_heap_size();
+        send_aws_msg(mqtt_client, macstr, timestr, Irms, free_mem);
+        ESP_LOGI(TAG, "[APP] Free memory: %d bytes", free_mem);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }

@@ -54,6 +54,7 @@ void init_sntp(void)
     strftime(tbuf, 80, "%xT%X", info);
     ESP_LOGI(TAG, "Current Time is: %s", tbuf);
     localtime_r(&now, &timeinfo);
+    //free(info);
 }
 
 char* current_iso_utc_time(void)
