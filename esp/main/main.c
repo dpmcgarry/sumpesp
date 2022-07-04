@@ -19,13 +19,16 @@
 #include "dizon_sntp.h"
 #include "dizon_mqtt.h"
 
+#define TRIG_GPIO 35
+#define ECHO_GPIO 32
+
 static const char *TAG = "Template App";
 
 // Current Calibration Constant
 // 246.9136 is what the math says this should be
 // 190 is what I figured out for my setup using an ammeter
 // and a portable electric heater
-static const double ICALIBRATION = 30.0;
+static const double ICALIBRATION = 29.0;
 
 void app_main(void)
 {
@@ -36,6 +39,8 @@ void app_main(void)
     char* timestr;
     esp_mqtt_client_handle_t mqtt_client;
     uint32_t free_mem;
+    dizon_sr04t_conf_t sr04_conf;
+    dizon_sr04t_data_t sr04_data;
 
     printf("Hello world!\n");
 
@@ -81,6 +86,24 @@ void app_main(void)
     init_sntp();
     mqtt_client=mqtt_app_start();
     emon_current(&emon, ADC1_CHANNEL_6, ICALIBRATION);
+    sr04_conf.trig_gpio = TRIG_GPIO;
+    sr04_conf.echo_gpio = ECHO_GPIO;
+    sr04_conf.max_range_cm = 350.0;
+    sr04_conf.num_samples = 5;
+
+    sr04_data.rec_data = false;
+    sr04_data.error = false;
+    sr04_data.distance_cm = 0.0;
+
+    ret = dizon_sr04t_init(&sr04_conf);
+    if (ret != ESP_OK) {
+        ESP_LOGE(TAG, "jsnsr04t init error %i (%s)", f_retval, esp_err_to_name(f_retval));
+    }
+
+    while(true){
+        ret = dizon_sr04t_get_data(&sr04_conf, &sr04_data);
+        
+    }
 
     while(true) {
         Irms = emon_calcIrms(&emon, 1480);

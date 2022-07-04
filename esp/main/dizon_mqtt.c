@@ -1,6 +1,6 @@
 #include "dizon_mqtt.h"
 
-static const char *TAG = "MQTTS_EXAMPLE";
+static const char *TAG = "DIZON_MQTT";
 
 
 static esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event)
