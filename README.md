@@ -35,6 +35,17 @@ Here are some basic requirements I came up with:
 1. Move away from relying on hardcoded values for SSID, Password, AWS Endpoint, and Certs at compile time.  My current 'thought' it to make a companion app to provision devices with.  We shall see...
 
 ## Tooling
-* Developing on Ubuntu 20 LTS (focal)
-* ESP-IDF 4.3
+* Developing on Ubuntu 22 LTS
+* ESP-IDF 4.4.1
 * VSCode w/ ESP-IDF extension
+
+## Getting Started
+* Create your own aws_clientcredential_keys.h in esp/include
+* Create your own KConfig.projbuild in esp/main
+* Setup the IDF version stated above
+* run idf.py build in the esp folder
+* Flash your ESP32
+
+## ToDo:
+* Go back and add sr04 support back in
+* 
